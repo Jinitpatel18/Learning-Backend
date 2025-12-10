@@ -9,7 +9,20 @@ dotenv.config({
 // requires('dotenv').config({
 //     path: './.env'
 // });
-connectDB();
+connectDB()
+.then(() => {
+    app.listen(process.env.PORT || 4000, () => {
+        console.log(`Server is running on port ${process.env.PORT}`);
+    })
+    app.on('error', (error) => {
+        console.log('Error',error.message);
+        throw error;
+    })
+})
+.catch(error => {
+    console.log('Error',error.message);
+    throw error;
+})
 
 const app = express();
 
